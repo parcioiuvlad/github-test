@@ -13,28 +13,37 @@ import java.util.concurrent.Future;
  * To change this template use File | Settings | File Templates.
  */
 public class Main {
+
+    ExecutorService executor = Executors.newFixedThreadPool(4);
     public void executor() {
-        ExecutorService executor = Executors.newFixedThreadPool(4);
         ArrayList<RunnableTest> runnableTests = new ArrayList<RunnableTest>();
         for(int i=0;i<10;i++) {
             runnableTests.add(new RunnableTest());
             executor.execute(runnableTests.get(i));
         }
-        executor.shutdown();
+
+        for(int i=0;i<10;i++) {
+            while(runnableTests.get(i).finished == false) {
+            }
+        }
+/*        executor.shutdown();
 
         while(!executor.isShutdown()) {
-        }
+        }*/
 
         for(int i=0;i<10;i++) {
             System.out.println(runnableTests.get(i).getList());
         }
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Throwable {
         Main main = new Main();
         main.executor();
+        main.executor.shutdown();
+        main.finalize();
         Main main2 = new Main();
         main2.executor();
+        main2.executor.shutdown();
         /*System.out.println("Main git test");
         System.out.println("second push");*/
     }
