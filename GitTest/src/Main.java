@@ -8,5 +8,6 @@
 public class Main {
     public static void main(String[] args) {
         System.out.println("Main git test");
+        System.out.println("second push");
     }
 }
