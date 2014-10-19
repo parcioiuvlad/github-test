@@ -1,9 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Executor;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
+import java.util.concurrent.*;
 
 /**
  * Created with IntelliJ IDEA.
@@ -16,6 +13,24 @@ public class Main {
 
     public void executor() {
         ExecutorService executor = Executors.newFixedThreadPool(4);
+        //List<Future<String>> list = new ArrayList<Future<String>>();
+        List<Future> list = new ArrayList<Future>();
+        for(int i=0;i<10;i++) {
+            Callable worker = new RunnableTest();
+            Future<List> submit = executor.submit(worker);
+            list.add(submit);
+        }
+        for (Future<List> future : list) {
+            try {
+                System.out.println(future.get());
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            }
+        }
+        executor.shutdown();
+        /*ExecutorService executor = Executors.newFixedThreadPool(4);
         ArrayList<RunnableTest> runnableTests = new ArrayList<RunnableTest>();
         for(int i=0;i<10;i++) {
             runnableTests.add(new RunnableTest());
@@ -29,7 +44,7 @@ public class Main {
 
         for(int i=0;i<10;i++) {
             System.out.println(runnableTests.get(i).getList());
-        }
+        }*/
 
     }
 

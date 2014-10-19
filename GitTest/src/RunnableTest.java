@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.concurrent.Callable;
 
 /**
  * Created with IntelliJ IDEA.
@@ -7,8 +8,9 @@ import java.util.ArrayList;
  * Time: 6:48 PM
  * To change this template use File | Settings | File Templates.
  */
-public class RunnableTest implements Runnable {
-    private ArrayList<Integer> list = new ArrayList<Integer>();
+public class RunnableTest implements Callable {
+    private ArrayList<String> list = new ArrayList<String>();
+/*
     @Override
     public void run() {
         for(int i=0;i<100;i++) {
@@ -16,8 +18,19 @@ public class RunnableTest implements Runnable {
         }
         System.out.println(Thread.currentThread().getName()+" "+Thread.currentThread().getId());
     }
+*/
 
     public ArrayList getList() {
+        return list;
+    }
+
+    @Override
+    public Object call() throws Exception {
+        for(int i=0;i<100;i++) {
+            list.add(String.valueOf(i));
+         }
+         System.out.println(Thread.currentThread().getName()+" "+Thread.currentThread().getId());
+
         return list;
     }
 }
