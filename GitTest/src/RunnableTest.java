@@ -9,14 +9,12 @@ import java.util.ArrayList;
  */
 public class RunnableTest implements Runnable {
     private ArrayList<Integer> list = new ArrayList<Integer>();
-    public boolean finished = false;
     @Override
     public void run() {
         for(int i=0;i<100;i++) {
             list.add(i);
         }
         System.out.println(Thread.currentThread().getName()+" "+Thread.currentThread().getId());
-        finished = true;
     }
 
     public ArrayList getList() {
